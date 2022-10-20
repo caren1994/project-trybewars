@@ -35,7 +35,9 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.filter((e) => e.name.includes(inputText)).map((e) => (
+        {data.filter(
+          (e) => e.name.toUpperCase().includes(inputText.toUpperCase()),
+        ).map((e) => (
           <tr
             key={ e.name }
           >

@@ -5,6 +5,9 @@ import AppContext from './AppContext';
 function AppProvider({ children }) {
   const [data, setData] = useState([]);
   const [inputText, setInputText] = useState('');
+  const [columnFilter, setColumnFilter] = useState('population');
+  const [comparisonFilter, setComparisonFilter] = useState('maior que');
+  const [number, setNumber] = useState(0);
 
   useEffect(() => {
     const requestApi = async () => {
@@ -15,12 +18,19 @@ function AppProvider({ children }) {
     };
     requestApi();
   }, []);
+
   const contexto = useMemo(() => ({
     data,
     setData,
     inputText,
     setInputText,
-  }), [data, inputText]);
+    columnFilter,
+    setColumnFilter,
+    comparisonFilter,
+    setComparisonFilter,
+    number,
+    setNumber,
+  }), [data, inputText, columnFilter, comparisonFilter, number]);
 
   return (
     <AppContext.Provider value={ contexto }>
