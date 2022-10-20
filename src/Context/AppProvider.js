@@ -2,10 +2,14 @@ import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
+const arrayOfColumn = [
+  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
 function AppProvider({ children }) {
   const [data, setData] = useState([]);
   const [inputText, setInputText] = useState('');
-  const [columnFilter, setColumnFilter] = useState('population');
+  const [columnNew, setColumnNew] = useState(arrayOfColumn);
+  const [columnFilter, setColumnFilter] = useState(arrayOfColumn[0]);
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [number, setNumber] = useState(0);
 
@@ -30,7 +34,10 @@ function AppProvider({ children }) {
     setComparisonFilter,
     number,
     setNumber,
-  }), [data, inputText, columnFilter, comparisonFilter, number]);
+    columnNew,
+    setColumnNew,
+
+  }), [data, inputText, columnFilter, comparisonFilter, number, columnNew]);
 
   return (
     <AppContext.Provider value={ contexto }>
