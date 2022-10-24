@@ -2,31 +2,17 @@ import { useContext } from 'react';
 import AppContext from '../Context/AppContext';
 
 function Form() {
-  const { data, setData, inputText, setInputText,
+  const { inputText, setInputText,
     columnFilter, setColumnFilter,
     comparisonFilter, setComparisonFilter,
-    number, setNumber, columnNew, setColumnNew } = useContext(AppContext);
+    number, setNumber, columnNew, filters, handleFilter,
+    excluirFiltros, handleButtonSort,
+    columnFiltersort,
+    setColumnFilterSort,
+    setSort, arrayOfColumn, excluirFiltro,
 
-  const handleFilter = () => {
-    if (comparisonFilter.includes('maior que')) {
-      const filtrado = data.filter((e) => Number(e[columnFilter]) > Number(number));
-      setColumnNew(columnNew.filter((e) => e !== columnFilter));
-      setColumnFilter(columnNew[0]);
-      setData(filtrado);
-    } else if (comparisonFilter.includes('menor que')) {
-      const filtrado = data.filter((e) => Number(e[columnFilter]) < Number(number));
-      setColumnNew(columnNew.filter((e) => e !== columnFilter));
-      setColumnFilter(columnNew[0]);
-      setData(filtrado);
-      console.log(filtrado);
-    } else if (comparisonFilter.includes('igual a')) {
-      const filtrado = data.filter((e) => Number(e[columnFilter]) === Number(number));
-      setColumnNew(columnNew.filter((e) => e !== columnFilter));
-      setColumnFilter(columnNew[0]);
-      setData(filtrado);
-      console.log(filtrado);
-    }
-  };
+  } = useContext(AppContext);
+
   return (
     <form>
       <label htmlFor="pesquisa">
@@ -86,6 +72,83 @@ function Form() {
       >
         Filtrar
       </button>
+      <div>
+
+        {
+          filters.length > 0
+  && (
+    <div>
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ excluirFiltros }
+      >
+        Excluir
+      </button>
+    </div>
+  )
+        }
+      </div>
+      <div>
+        <p>Filtros Selecionados:</p>
+        {
+          filters?.map((e, i) => (
+            <div data-testid="filter" key={ i }>
+              <p>{`${e.columnFilter} ${e.comparisonFilter} ${e.number}`}</p>
+              <button
+                type="button"
+                onClick={ () => excluirFiltro(e) }
+              >
+                X
+              </button>
+
+            </div>
+          ))
+        }
+      </div>
+
+      <div>
+        <select
+          data-testid="column-sort"
+          value={ columnFiltersort }
+          onChange={ ({ target }) => setColumnFilterSort(target.value) }
+        >
+          {
+            arrayOfColumn.map((e) => (<option key={ e } value={ e }>{e}</option>))
+          }
+        </select>
+        <label htmlFor="sort-asc">
+          Ascendente
+          <input
+            type="radio"
+            name="sort"
+            id="sort-asc"
+            data-testid="column-sort-input-asc"
+            value="ASC"
+            onChange={ ({ target }) => setSort(target.value) }
+          />
+
+        </label>
+        <label htmlFor="sort-desc">
+          Descendente
+          <input
+            type="radio"
+            name="sort"
+            id="sort-desc"
+            data-testid="column-sort-input-desc"
+            value="DESC"
+            onChange={ ({ target }) => setSort(target.value) }
+          />
+
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ handleButtonSort }
+        >
+          ORDENAR
+        </button>
+      </div>
     </form>
 
   );

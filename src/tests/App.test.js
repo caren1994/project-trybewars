@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen } from '@testing-library/react';
+import {render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
 
@@ -45,11 +45,14 @@ it('testando data-testid',()=>{
   const column=screen.getByTestId("column-filter");
   const comparison=screen.getByTestId("comparison-filter");
   const value=screen.getByTestId("value-filter");
-  const button=screen.getByRole('button');
+  const button=screen.getByRole('button',{ name: /Filtrar/i });
+
+  // const buttonexc=screen.getByRole('button',{ name: /Excluir/i })
 
   expect(column).toBeInTheDocument();
   expect(comparison).toBeInTheDocument();
   expect(value).toBeInTheDocument();
+
 
   userEvent.selectOptions(column, 'surface_water');
   userEvent.selectOptions(comparison, 'igual a');
@@ -65,9 +68,33 @@ it('testando data-testid',()=>{
   userEvent.selectOptions(comparison, 'maior que');
   userEvent.type(value, '364');
   userEvent.click(button);
+  // userEvent.click(buttonexc);
+  const buttonExcluirTodos = screen.getByRole('button', {
+    name: /excluir/i
+  })
+
+  expect(buttonExcluirTodos).toBeInTheDocument();
+
+  userEvent.click(buttonExcluirTodos);
 
 
 });
 
 
+it('Testando o botão ordenar', () => {
+  render(<App />);
+
+  const radios = screen.getAllByRole('radio');
+  const buttonOrdenar = screen.getByRole('button', {
+    name: /ordenar/i,
+  });
+  const columns = screen.getByTestId('column-sort');
+
+  userEvent.selectOptions(columns, 'diameter');
+  userEvent.click(buttonOrdenar);
+  userEvent.click(radios[1]);
+  userEvent.click(buttonOrdenar);
+
+})
 });
+
