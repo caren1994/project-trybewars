@@ -15,8 +15,9 @@ function Form() {
 
   return (
     <form>
+      <h1> Projeto Star Wars - Trybe</h1>
       <label htmlFor="pesquisa">
-        Projeto Star Wars - Trybe
+        Pesquisar:
         <input
           data-testid="name-filter"
           type="text"
@@ -113,6 +114,8 @@ function Form() {
           value={ columnFiltersort }
           onChange={ ({ target }) => setColumnFilterSort(target.value) }
         >
+          {' '}
+          Order:
           {
             arrayOfColumn.map((e) => (<option key={ e } value={ e }>{e}</option>))
           }

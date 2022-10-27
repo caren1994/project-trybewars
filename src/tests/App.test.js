@@ -1,12 +1,15 @@
 import React from 'react';
-import {render, screen, waitFor } from '@testing-library/react';
+import {render, screen, getNodeText} from '@testing-library/react';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
+import mock from './mockData';
+import { act } from 'react-dom/test-utils';
 
 
 describe('testando 30 a 60%',()=>{
+
 it('testando texto', () => {
-  render(<App />);
+    render(<App />);
   const text=screen.getByText(/Projeto Star Wars - Trybe/i);
   const name=screen.getByText(/Name/i);
   const rotation=screen.getByText(/Rotation Period/i);
@@ -37,7 +40,6 @@ it('testando texto', () => {
   expect(Edited).toBeInTheDocument();
   expect(url).toBeInTheDocument();
 
-
 });
 it('testando data-testid',()=>{
   render(<App />);
@@ -47,54 +49,188 @@ it('testando data-testid',()=>{
   const value=screen.getByTestId("value-filter");
   const button=screen.getByRole('button',{ name: /Filtrar/i });
 
-  // const buttonexc=screen.getByRole('button',{ name: /Excluir/i })
 
+  expect(name).toBeInTheDocument();
   expect(column).toBeInTheDocument();
   expect(comparison).toBeInTheDocument();
   expect(value).toBeInTheDocument();
-
-
-  userEvent.selectOptions(column, 'surface_water');
-  userEvent.selectOptions(comparison, 'igual a');
-  userEvent.type(value, '100');
-  userEvent.click(button);
-
-  userEvent.selectOptions(column, 'population');
-  userEvent.selectOptions(comparison, 'maior que');
-  userEvent.type(value, '200000');
-  userEvent.click(button);
-
-  userEvent.selectOptions(column, 'orbital_period');
-  userEvent.selectOptions(comparison, 'maior que');
-  userEvent.type(value, '364');
-  userEvent.click(button);
-  // userEvent.click(buttonexc);
-  const buttonExcluirTodos = screen.getByRole('button', {
-    name: /excluir/i
-  })
-
-  expect(buttonExcluirTodos).toBeInTheDocument();
-
-  userEvent.click(buttonExcluirTodos);
-
-
+  expect(button).toBeInTheDocument();
 });
+it('Testando ascendente e descendente',() => {
+    render(<App />);
+    const columnSort = screen.getByTestId('column-sort');
+    const inputAsc = screen.getByTestId('column-sort-input-asc');
+    const InputDesc = screen.getByTestId('column-sort-input-desc');
+    const buttonOrder = screen.getByTestId('column-sort-button');
+  
+    expect(columnSort).toBeInTheDocument();
+    expect(inputAsc).toBeInTheDocument();
+    expect(InputDesc).toBeInTheDocument();
+    expect(buttonOrder).toBeInTheDocument();
+});
+it('test renderiza informações api',async()=>{
+  global.fetch=jest.fn(async()=>({
+    json:async()=>mock, // obs:se tiver todo com string tem q tirar do json fazendo json.parse
+  }))
 
-
-it('Testando o botão ordenar', () => {
-  render(<App />);
-
-  const radios = screen.getAllByRole('radio');
-  const buttonOrdenar = screen.getByRole('button', {
-    name: /ordenar/i,
+  await act(async () => {
+    render(<App/>);
   });
-  const columns = screen.getByTestId('column-sort');
 
-  userEvent.selectOptions(columns, 'diameter');
-  userEvent.click(buttonOrdenar);
-  userEvent.click(radios[1]);
-  userEvent.click(buttonOrdenar);
+  const nameFilter=screen.getByTestId('name-filter');
+  userEvent.type(nameFilter,'oo');
 
+  const todosPlanetas=screen.getAllByTestId('planet-name');
+  expect(todosPlanetas).toHaveLength(2);
+  global.fetch.mockRestore();
 })
+it('test filter by column parameter', async() => {
+  global.fetch=jest.fn(async()=>({
+    json:async()=>mock, // obs:se tiver todo com string tem q tirar do json fazendo json.parse
+  }))
+
+  await act(async () => {
+    render(<App/>);
+  });
+
+
+  const column=screen.getByTestId("column-filter");
+  userEvent.selectOptions(column, 'population');
+  const comparison=screen.getByTestId("comparison-filter");
+  userEvent.selectOptions(comparison, 'maior que');
+  const value=screen.getByTestId("value-filter");
+  userEvent.type(value,'1000');
+
+
+  const button=screen.getByRole('button',{ name: /Filtrar/i });
+  userEvent.click(button);
+
+  const todosPlanetas=screen.getAllByTestId('planet-name');
+  expect(todosPlanetas).toHaveLength(7);
+
+  const removeFiltros = screen.getByRole('button', {
+    name: /Excluir/i
+  });
+
+  expect(removeFiltros).toBeInTheDocument();
+
+  await userEvent.click(removeFiltros);
+
+
+  setTimeout(()=>expect(todosPlanetas).toHaveLength(10),1000);
+
+
+
+
+});
+it('test filter sort', async() => {
+  global.fetch=jest.fn(async()=>({
+    json:async()=>mock, // obs:se tiver todo com string tem q tirar do json fazendo json.parse
+  }))
+
+  await act(async () => {
+    render(<App/>);
+  });
+
+  const columnSort = screen.getByTestId('column-sort');
+  const inputAsc = screen.getByTestId('column-sort-input-asc');
+  const buttonOrder = screen.getByTestId('column-sort-button');
+
+  userEvent.selectOptions(columnSort, 'population');
+  userEvent.click(inputAsc);
+  userEvent.click(buttonOrder);
+
+  const planetasOrdenados=screen.getAllByTestId('planet-name');
+  expect(getNodeText(planetasOrdenados[0])).toBe( 'Yavin IV');
+  
+});
+it('test filter sort', async() => {
+  global.fetch=jest.fn(async()=>({
+    json:async()=>mock, // obs:se tiver todo com string tem q tirar do json fazendo json.parse
+  }))
+
+  await act(async () => {
+    render(<App/>);
+  });
+  const columnSort = screen.getByTestId('column-sort');
+  const InputDesc = screen.getByTestId('column-sort-input-desc');
+  const buttonOrder = screen.getByTestId('column-sort-button');
+
+  userEvent.selectOptions(columnSort, 'population');
+  userEvent.click(InputDesc);
+  userEvent.click(buttonOrder);
+
+  const planetasOrdenados=screen.getAllByTestId('planet-name');
+  expect(getNodeText(planetasOrdenados[0])).toBe( 'Coruscant');
+
+});
+it('test todos filter ', async() => {
+  global.fetch=jest.fn(async()=>({
+    json:async()=>mock, // obs:se tiver todo com string tem q tirar do json fazendo json.parse
+  }))
+
+  await act(async () => {
+    render(<App/>);
+  });
+
+
+  
+  const comparison=screen.getByTestId("comparison-filter");
+  const value=screen.getByTestId("value-filter");
+  const column=screen.getByTestId("column-filter");
+ 
+
+  userEvent.selectOptions(column, 'rotation_period');
+  userEvent.selectOptions(comparison, 'menor que');
+
+  userEvent.type(value,'24');
+
+
+  const button=screen.getByRole('button',{ name: /Filtrar/i });
+  userEvent.click(button);
+
+  const todosPlanetas=screen.getAllByTestId('planet-name');
+  
+  expect(todosPlanetas).toHaveLength(5);
+
+});
+it('test todos filter IGUAL A  ', async() => {
+  global.fetch=jest.fn(async()=>({
+    json:async()=>mock, // obs:se tiver todo com string tem q tirar do json fazendo json.parse
+  }))
+
+  await act(async () => {
+    render(<App/>);
+  });
+
+  const comparison=screen.getByTestId("comparison-filter");
+  const value=screen.getByTestId("value-filter");
+  const column=screen.getByTestId("column-filter");
+  const button=screen.getByRole('button',{ name: /Filtrar/i });
+ 
+  userEvent.selectOptions(column, 'orbital_period');
+  userEvent.selectOptions(comparison, 'igual a');
+
+  userEvent.type(value,'364');
+
+
+
+  userEvent.click(button);
+  const planetasOrdenados=screen.getAllByTestId('planet-name');
+  setTimeout(()=>expect(planetasOrdenados).toHaveLength(10),1000);
+
+const removeFiltro = screen.getByRole('button', {
+    name:'X'
+  });
+
+  await userEvent.click(removeFiltro);
+
+
+
+
+
 });
 
+
+
+});
