@@ -15,10 +15,11 @@ function Form() {
 
   return (
     <form>
-      <h1> Projeto Star Wars - Trybe</h1>
-      <label htmlFor="pesquisa">
+      <h1 className="titulo"> Projeto Star Wars - Trybe</h1>
+      <label className="label" htmlFor="pesquisa">
         Pesquisar:
         <input
+          className="inputs1"
           data-testid="name-filter"
           type="text"
           id="pesquisa"
@@ -29,7 +30,7 @@ function Form() {
       <label className="inputs" htmlFor="columnfilter">
 
         <select
-          className="inputs"
+          className="select1"
           name="columnfilter"
           id="columnfilter"
           value={ columnFilter }
@@ -37,7 +38,7 @@ function Form() {
           onChange={ ({ target }) => setColumnFilter(target.value) }
         >
           {columnNew.map((e, index) => (
-            <option key={ index } value={ e }>
+            <option className="option" key={ index } value={ e }>
               {e}
             </option>))}
         </select>
@@ -45,20 +46,21 @@ function Form() {
       <label className="inputs" htmlFor="comparison-filter">
 
         <select
-          className="inputs"
+          className="select1"
           name="comparison-filter"
           id="comparison-filter"
           value={ comparisonFilter }
           data-testid="comparison-filter"
           onChange={ ({ target }) => setComparisonFilter(target.value) }
         >
-          <option value="maior que">maior que</option>
-          <option value="menor que">menor que</option>
-          <option value="igual a">igual a</option>
+          <option className="option" value="maior que">maior que</option>
+          <option className="option" value="menor que">menor que</option>
+          <option className="option" value="igual a">igual a</option>
         </select>
       </label>
       <label htmlFor="number">
         <input
+          className="inputs1"
           type="number"
           id="number"
           value={ number }
@@ -67,6 +69,7 @@ function Form() {
         />
       </label>
       <button
+        className="filtrar"
         data-testid="button-filter"
         type="button"
         onClick={ handleFilter }
@@ -80,6 +83,7 @@ function Form() {
   && (
     <div>
       <button
+        className="excluir"
         type="button"
         data-testid="button-remove-filters"
         onClick={ excluirFiltros }
@@ -91,12 +95,13 @@ function Form() {
         }
       </div>
       <div>
-        <p>Filtros Selecionados:</p>
+        <p className="label">Filtros Selecionados:</p>
         {
           filters?.map((e, i) => (
             <div data-testid="filter" key={ i }>
               <p>{`${e.columnFilter} ${e.comparisonFilter} ${e.number}`}</p>
               <button
+                className="x"
                 type="button"
                 onClick={ () => excluirFiltro(e) }
               >
@@ -110,6 +115,7 @@ function Form() {
 
       <div>
         <select
+          className="select"
           data-testid="column-sort"
           value={ columnFiltersort }
           onChange={ ({ target }) => setColumnFilterSort(target.value) }
@@ -117,10 +123,11 @@ function Form() {
           {' '}
           Order:
           {
-            arrayOfColumn.map((e) => (<option key={ e } value={ e }>{e}</option>))
+            arrayOfColumn.map((e) => (
+              <option className="option" key={ e } value={ e }>{e}</option>))
           }
         </select>
-        <label htmlFor="sort-asc">
+        <label className="label" htmlFor="sort-asc">
           Ascendente
           <input
             type="radio"
@@ -132,7 +139,7 @@ function Form() {
           />
 
         </label>
-        <label htmlFor="sort-desc">
+        <label className="label" htmlFor="sort-desc">
           Descendente
           <input
             type="radio"
@@ -145,6 +152,7 @@ function Form() {
 
         </label>
         <button
+          className="ordenar"
           type="button"
           data-testid="column-sort-button"
           onClick={ handleButtonSort }

@@ -1,41 +1,138 @@
-.App {
-  text-align: center;
+
+  body{
+    background-image:url("starwars/starwars3.jpg");
+    /* background-repeat: no-repeat; */
+    color:white;
+  } 
+
+  .tabela{
+    margin-top: 50px;
+  border:1px solid white;
+} 
+
+
+table,
+tr,
+th,
+td {
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-collapse: collapse;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+th {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+td {
+  background-color: rgba(255, 255, 255, 0.13);
+}
+.filtrar {
+  margin-left: 10px;
+  background-color: #ffffff;
+  color: #080710;
+  font-weight: 600;
+  border-radius: 5px;
+  border-style: none;
+  height: 30px;
+  padding: 0px 3px;
+}
+.filtrar:hover{
+width: 60px;
+height: 40px;
+}
+.ordenar {
+  margin-left: 10px;
+  background-color: #ffffff;
+  color: #080710;
+  font-weight: 600;
+  border-radius: 5px;
+  border-style: none;
+  height: 30px;
+  padding: 0px 3px;
+}
+.ordenar:hover{
+  height: 40px;
+width: 100px;
+}
+.select {
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: #ffffff;
+  color: #080710;
+  font-weight: 600;
+  border-radius: 5px;
+  border-style: none;
+  height: 30px;
+  padding: 0px 3px;
+}
+.select1 {
+margin-left: 6px;
+margin-right: 6px;
+  background-color: #ffffff;
+  color: #080710;
+  font-weight: 600;
+  border-radius: 5px;
+  border-style: none;
+  height: 30px;
+  padding: 0px 3px;
 }
 
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
+.option{
+  color: #080710;
+  font-weight: 600;
 }
-
-.App-link {
-  color: #61dafb;
+th:nth-child(5), td:nth-child(5) {
+  width: 280px;
+  height: 50px;
+flex-wrap: wraps;
 }
+.titulo{
+color: rgb(245, 165, 68);
+}
+.inputs1{
+  margin-left: 10px;
+margin-right: 10px;
+  background-color: #ffffff;
+border-radius: 5px; 
+  border-style: none;
+  height: 30px;
+  padding: 0px 3px; 
+} 
+.label{
 
-@keyframes App-logo-spin {
+  font-weight: 800;
+}
+.x{
+  margin-left: 10px;
+  background-color: #ffffff;
+  color: #080710;
+  font-weight: 600;
+  border-radius: 5px;
+  border-style: none;
+  height: 30px;
+  padding: 0px 3px;
+  margin-bottom: 30px;
+  height: 30px;
+  width: 40px;
+}
+.x:hover{
+  height: 40px;
+width: 50px;
 
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+}
+.excluir {
+  margin-left: 10px;
+  margin-top: 30px;
+  background-color: #ffffff;
+  color: #080710;
+  font-weight: 600;
+  border-radius: 5px;
+  border-style: none;
+  height: 30px;
+  padding: 0px 3px;
+}
+.excluir:hover{
+  height: 40px;
+width: 100px;
 }
