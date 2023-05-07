@@ -1,19 +1,32 @@
-# Projeto Trybewarts 
+# Projeto StarWars Planets
 
-Projeto em grupo realizado durante módulo de fundamentos do curso de desenvolvimento web da Trybe.
+Projeto realizado durante módulo de Front-end do curso de desenvolvimento web da Trybe.
 
 
-  <summary>O que foi feito</summary>
+  <summary><strong>O que foi feito</strong></summary></br>
 
-  - Neste projeto, foi desenvolvido uma página de formulário para cadastro de estudantes apenas utlizando HTML```forms``` 
+  Neste projeto desenvolvi uma lista com filtros de planetas do universo de Star Wars usando Context API e Hooks para controlar os estados globais.
 
-  <summary>Habilidades</summary>
+A aplicação foi desenvolvida com:
 
-  - Criar formulários em HTML;
-  - Utilizar o Bootstrap;
-  - CSS Flexbox;
+- `React`
+- `JavaScript`
+- `Contex-API`
+- `Hooks`
+- `RTL`
 
-  <summary>Para rodar o projeto</summary>
 
-  - Clone o projeto desse repositório para sua máquina;
-  - Utilize a extensão ```live preview``` do vscode;
+  <summary><strong>Como rodar o projeto</strong></summary></br>
+
+- `npm install`
+- `npm start`
+- acessar no browser `http://localhost:3000`
+
+
+  <summary><strong>:memo: Habilidades</strong></summary><br />
+
+- Utilizar a Context API do React para gerenciar estado.
+- Utilizar o React Hook useState;
+- Utilizar o React Hook useContext;
+- Utilizar o React Hook useEffect;
+- Escrever testes para garantir que sua aplicação possua uma boa cobertura de testes.
